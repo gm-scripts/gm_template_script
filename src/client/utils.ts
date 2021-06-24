@@ -14,6 +14,8 @@ let ESX: unknown;
 let lang: unknown = {};
 let conf: unknown = {};
 
+let langLoaded = false;
+
 const wait = (ms: number): Promise<void> => new Promise(resolve => setTimeout(resolve, ms));
 
 let callbacks: unknown;
@@ -53,9 +55,14 @@ const loadLocales = (locales: unknown) => {
 
 const loadConfig = (config: unknown) => {
   conf = config;
-  configLoaded();
-  checkConf();
-  checkLang();
+  const interval = setTick(() => {
+    if (langLoaded) {
+      configLoaded();
+      checkConf();
+      checkLang();
+      clearTick(interval);
+    }
+  });
 };
 
 const helpText = (text: string): void => {
