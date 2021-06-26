@@ -51,6 +51,7 @@ serverCallback(`gm_${script}:getConfig`, {}, (config: unknown) => {
 
 const loadLocales = (locales: unknown) => {
   lang = locales;
+  langLoaded = true;
 };
 
 const loadConfig = (config: unknown) => {
